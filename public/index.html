@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecureID — Register</title>
+<link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<div class="head"> <!--app-shell-->
+  <div class="card" id="card">
+    <div class="brand">
+      <!-- <span class="brand-icon">🛡️</span> -->
+      <span class="brand-name">SecureID</span>
+    </div>
+    <section class="screen" data-screen="reg-details">
+      <h1>Create your account</h1>
+      <p class="subtitle">Let's get you started</p>
+
+      <form id="form-register" novalidate>
+        <label>Full Name
+          <input type="text" name="fullName" placeholder="Priya Sharma" required />
+        </label>
+        <label>Email
+          <input type="email" name="email" placeholder="priya.sharma@email.com" required />
+        </label>
+        <label>Mobile Number
+          <div class="mobile-row">
+            <span class="prefix">+91</span>
+            <input type="tel" name="mobile" placeholder="9876543210" required />
+          </div>
+        </label>
+        <label>Password
+          <div class="password">
+            <input type="password" name="password" id="reg-password" placeholder="Create a password" required />
+            <button type="button" class="ghost-icon-btn" data-toggle-password="reg-password">👁</button>
+          </div>
+        </label>
+
+        <ul class="password-rules" id="password-rules">
+          <li data-rule="len">At least 8 characters</li>
+          <li data-rule="upper">1 uppercase letter</li>
+          <li data-rule="num">1 number</li>
+          <li data-rule="special">1 special character</li>
+        </ul>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="agreeTerms" required />
+          <span>I agree to the <a href="#" tabindex="-1">Terms &amp; Conditions</a> and <a href="#" tabindex="-1">Privacy Policy</a></span>
+        </label>
+
+        <div class="form-error" id="register-error"></div>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+        <p class="footnote">Already have an account? <a href="#" data-goto="login-placeholder">Login</a></p>
+      </form>
+    </section>
+    <section class="screen" data-screen="otp">
+      <button class="back-btn" data-goto-back>Back</button>
+      <div class="icon-badge" id="otp-icon">✉️</div>
+      <h1 id="otp-title">Verify your email</h1>
+      <p class="subtitle" id="otp-subtitle">We have sent a 6-digit code to <strong id="otp-destination"></strong></p>
+
+      <form id="form-otp">
+        <div class="otp-boxes" id="otp-boxes">
+          <input maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+          <input maxlength="1" inputmode="numeric" />
+          <input maxlength="1" inputmode="numeric" />
+          <input maxlength="1" inputmode="numeric" />
+          <input maxlength="1" inputmode="numeric" />
+          <input maxlength="1" inputmode="numeric" />
+        </div>
+
+        <div class="otp-error" id="otp-error"></div>
+        <p class="timer-row" id="otp-timer-row">Code expires in <span id="otp-timer">02:00</span></p>
+
+        <button type="submit" class="btn-primary" id="otp-submit-btn">Verify</button>
+      </form>
+
+      <p class="footnote">
+        <a href="#" id="otp-resend-link">Resend code (<span id="otp-resend-cooldown">00:25</span>)</a>
+      </p>
+      <p class="footnote small" id="otp-didnt-receive">Didn't receive the code?</p>
+      <p class="footnote small" id="otp-wrong-number" hidden>Wrong number? <a href="#" data-goto="reg-details">Change</a></p>
+    </section>
+    <section class="screen" data-screen="reg-mfa-setup">
+      <div class="icon-badge purple">🔐</div>
+      <h1>Set up Multi-Factor Auth</h1>
+      <p class="subtitle">Add an extra layer of security to protect your account</p>
+
+      <form id="form-mfa-setup">
+        <label class="mfa-option">
+          <input type="radio" name="mfaMethod" value="totp" checked />
+          <span class="mfa-option-text">
+            <strong>Authenticator App</strong>
+            <small>Google Authenticator / Authy</small>
+          </span>
+        </label>
+        <label class="mfa-option">
+          <input type="radio" name="mfaMethod" value="sms" />
+          <span class="mfa-option-text">
+            <strong>SMS Authentication</strong>
+            <small>Receive codes on your mobile</small>
+          </span>
+        </label>
+        <label class="mfa-option">
+          <input type="radio" name="mfaMethod" value="email" />
+          <span class="mfa-option-text">
+            <strong>Email Authentication</strong>
+            <small>Receive codes on your email</small>
+          </span>
+        </label>
+
+        <button type="submit" class="btn-primary">Continue</button>
+      </form>
+    </section>
+    <section class="screen" data-screen="reg-mfa-qr">
+      <h1>Scan QR Code</h1>
+      <p class="subtitle">Open your authenticator app and scan this QR code</p>
+
+      <div class="qr-wrap">
+        <img id="qr-image" alt="TOTP QR code" />
+      </div>
+
+      <p class="footnote small">Can't scan? <a href="#" id="show-secret-key">Enter setup key</a></p>
+      <p class="footnote small mono" id="secret-key" hidden></p>
+
+      <button type="button" class="btn-primary" id="mfa-qr-continue">Continue</button>
+    </section>
+    <section class="screen" data-screen="reg-success">
+      <div class="icon-badge green">✅</div>
+      <h1>Account created!</h1>
+      <p class="subtitle">Your account has been created successfully and MFA is enabled.</p>
+
+      <ul class="success-checklist">
+        <li>✔ Email verified</li>
+        <li>✔ Mobile verified</li>
+        <li>✔ MFA enabled</li>
+      </ul>
+
+      <button type="button" class="btn-primary" data-goto="login-placeholder">Continue to Login</button>
+    </section>
+    <section class="screen" data-screen="login-placeholder">
+      <div class="icon-badge blue">🛡️</div>
+      <h1>Welcome back!</h1>
+      <p class="subtitle">Your account was created successfully. The Login journey ships in Part 2.</p>
+      <button type="button" class="btn-primary" data-goto="reg-details">Back to Registration</button>
+    </section>
+
+  </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
