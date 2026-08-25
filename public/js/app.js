@@ -335,6 +335,7 @@ document.getElementById("form-register").addEventListener("submit", async (e) =>
         errorEl.classList.add("visible");
         return;
     }
+console.log("🔐 Registration Email OTP:", data.devOtp);
 
     renderOtpScreen({
         purpose: "register-email",
