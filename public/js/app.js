@@ -311,7 +311,7 @@ document.getElementById("otp-resend-link").addEventListener("click", async (e) =
         renderOtpScreen({ purpose: "register-email", challengeId: data.challengeId, userId: otpState.userId, channel: "email", destination: data.maskedEmail, ttlSeconds: data.expiresInSeconds ,pushHistory:false});
     } else if (otpState.purpose === "register-sms") {
         const { data } = await api("/api/send-sms-otp", "POST", { userId: otpState.userId, purpose: "register-sms" });
-        // console.log("📱 Registration SMS OTP:", send.data.devOtp);
+        console.log("📱 Registration SMS OTP:", data.devOtp);
         renderOtpScreen({ purpose: "register-sms", challengeId: data.challengeId, userId: otpState.userId, channel: "sms", destination: data.maskedMobile, ttlSeconds: data.expiresInSeconds });
     }
 });
