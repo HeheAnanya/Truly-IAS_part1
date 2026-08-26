@@ -4,9 +4,13 @@ const bcrypt = require("bcryptjs");
 const store = require("./backend/store");
 const otp = require("./backend/otp");
 const auth = require("./backend/auth");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors(
+   { origin: "https://ananya-secureid.vercel.app"}
+));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
