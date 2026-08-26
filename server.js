@@ -87,7 +87,7 @@ app.post("/api/register", async (req, res,next) => {
         challengeId: challenge.challengeId,
         maskedEmail: maskEmail(user.email),
         expiresInSeconds: otp.OTP_TTL_MS / 1000,
-        // devOtp: challenge.code,
+        devOtp: challenge.code,
     });
 });
 app.post("/api/send-email-otp",async  (req, res,next) => {
@@ -106,7 +106,7 @@ app.post("/api/send-email-otp",async  (req, res,next) => {
         challengeId: challenge.challengeId,
         maskedEmail: maskEmail(user.email),
         expiresInSeconds: otp.OTP_TTL_MS / 1000,
-        // devOtp:challenge.code
+        devOtp:challenge.code
     });
 });
 
@@ -145,7 +145,7 @@ app.post("/api/send-sms-otp", async (req, res,next) => {
         challengeId: challenge.challengeId,
         maskedMobile: maskMobile(user.mobile),
         expiresInSeconds: otp.OTP_TTL_MS / 1000,
-        // devOtp:challenge.code
+        devOtp:challenge.code
     });
 });
 
